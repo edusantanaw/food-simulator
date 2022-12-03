@@ -13,7 +13,7 @@ app.use(express.static('public'))
 createAdmin()
 app.use('/', routes)
 
-const Port  = process.env.PORT || 4000
+const Port  = process.env.PORT || 5000
 app.listen(Port, ()=> {
     console.log(`Servidor rodando na porta ${Port}`)
 })

@@ -7,7 +7,7 @@ export const useApi =  (
   url: string,
   dependece?: any
 ) => {
-  const [data, setData] = useState<object[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
 

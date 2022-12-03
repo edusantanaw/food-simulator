@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import Label from "../../../../components/Label";
+import { useApi } from "../../../../hooks/useApi";
 import { update } from "../../../../slice/productSlice";
 
 interface props {
@@ -23,6 +24,8 @@ const EditProduct = ({ handleEdit, id }: props) => {
     const img = e.target.files[0];
     setImage(img);
   };
+  const { data } = useApi(`/products/${id}`);
+  console.log(data);
   const handleCreate = () => {
     const form = new FormData();
     if (name.current !== null) form.append("name", name.current.value);
@@ -34,6 +37,7 @@ const EditProduct = ({ handleEdit, id }: props) => {
     if (off.current !== null) form.append("off", off.current.value);
     form.append("id", id);
     dispatch(update(form));
+    handleEdit()
   };
 
   return (
@@ -44,6 +48,7 @@ const EditProduct = ({ handleEdit, id }: props) => {
           className="bg-zinc-900 rounded-md  h-9 outline-none p-5 text-white  "
           ref={name}
           placeholder="example"
+          defaultValue={data[0]?.name}
         />
         <Label name="Category" />
         <div className="relative">
@@ -53,37 +58,38 @@ const EditProduct = ({ handleEdit, id }: props) => {
             placeholder="example"
             onClick={() => setShowCategory(showCategory ? false : true)}
             readOnly
+            defaultValue={data[0]?.category}
           />
           <FaAngleDown className="absolute top-2 cursor-pointer right-4 text-2xl" />
           {showCategory && (
             <ul className="absolute bg-zinc-900 w-full mt-2 rounded-md p-2">
               <li
                 className="p-1 cursor-pointer"
-                onClick={() => (setCategory("hamburger"))}
+                onClick={() => setCategory("hamburger")}
               >
                 Hamburger
               </li>
               <li
                 className="p-1 cursor-pointer"
-                onClick={() => (setCategory("pizza"))}
+                onClick={() => setCategory("pizza")}
               >
                 Pizza
               </li>
               <li
                 className="p-1 cursor-pointer"
-                onClick={() => (setCategory("cake"))}
+                onClick={() => setCategory("cake")}
               >
                 cake
               </li>
               <li
                 className="p-1 cursor-pointer"
-                onClick={() => (setCategory("icecream"))}
+                onClick={() => setCategory("icecream")}
               >
                 Ice cream
               </li>
               <li
                 className="p-1 cursor-pointer"
-                onClick={() => (setCategory("tacos"))}
+                onClick={() => setCategory("tacos")}
               >
                 Tacos
               </li>
@@ -95,18 +101,21 @@ const EditProduct = ({ handleEdit, id }: props) => {
           className="bg-zinc-900 rounded-md  h-9 outline-none p-5 text-white  "
           ref={price}
           placeholder="example"
+          defaultValue={data[0]?.price}
         />
         <Label name="Description" />
         <input
           className="bg-zinc-900 rounded-md  h-9 outline-none p-5 text-white  "
           ref={description}
           placeholder="example"
+          defaultValue={data[0]?.description}
         />
         <Label name="Off" />
         <input
           className="bg-zinc-900 rounded-md  h-9 outline-none p-5 text-white  "
           ref={off}
           placeholder="example"
+          defaultValue={data[0]?.off}
         />
         <div className="mt-5 ">
           <label

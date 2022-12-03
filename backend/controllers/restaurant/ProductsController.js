@@ -19,20 +19,20 @@ const registerProduct = async (req, res) => {
     switch (category) {
       case "hamburder": {
         off = 0.2;
-        break
+        break;
       }
       case "pizza": {
         off = 0.4;
-        break
+        break;
       }
       case "cake": {
         off = 0.1;
-        break
+        break;
       }
       default:
         off = 0;
     }
-    console.log(off)
+    console.log(off);
     const newProduct = new Products({
       name,
       category,
@@ -77,7 +77,7 @@ const getProductById = async (req, res) => {
 const editProduct = async (req, res) => {
   const id = req.params.id;
 
-  const { name, category, price, description, available } = req.body;
+  const { name, category, price, description, available, off } = req.body;
   const image = req.files;
   try {
     validId(id);
@@ -85,9 +85,8 @@ const editProduct = async (req, res) => {
     const product = await Products.findOne({ id: id });
     if (!product) throw "Nenhum produto encontrado!";
 
-    if (name) {
+    if (name && name !== product.name) {
       const existsName = await Products.find({ name: name });
-      console.log(existsName);
       if (existsName.length > 0)
         throw "Este nome de produto já está sendo usado!";
       product.name = name;
@@ -96,8 +95,9 @@ const editProduct = async (req, res) => {
     if (category) product.category = category;
     if (price) product.price = price;
     if (description) product.description = description;
-    if (image) product.image = image;
+    if (image[0]) product.image = image;
     if (available) product.available = available;
+    if (off) product.off = off;
     await Products.findOneAndUpdate(
       { _id: product._id },
       { $set: product },

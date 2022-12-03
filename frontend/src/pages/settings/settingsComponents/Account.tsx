@@ -160,7 +160,7 @@ const Account = () => {
           </button>
           <input
             type="submit"
-            className="bg-violet  border w-40 rounded-md text-white border-violet h-10"
+            className="bg-violet  border w-40 rounded-md text-white border-violet h-10 cursor-pointer"
           />
         </div>
       </form>

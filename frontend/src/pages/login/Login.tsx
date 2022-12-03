@@ -51,7 +51,7 @@ const Login = () => {
           <p className="text-red-600">{errors?.email && <>{errors.email.message} </>}</p>
           <Label name={"Password"} />
           <input
-            type="text"
+            type="password"
             placeholder="***********"
             className={`${errors.password ? 'border border-red-500': ''} bg-zinc-900 rounded-md  h-9 outline-none p-5 text-white `}
             {...register("password")}
